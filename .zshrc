@@ -93,3 +93,5 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 fpath=($HOME_DIR/.gtheme/completions $fpath)
 autoload -Uz compinit && compinit -u
 zstyle ':completion:*' menu select
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

@@ -1,0 +1,55 @@
+# Tokyo-Night 
+
+window:
+  padding:
+    x: 18
+    y: 18
+  dyanmic_padding: true
+
+font:
+  normal:
+    family: DejaVuSansMono Nerd Font
+  bold:
+    family: DejaVuSansMono Nerd Font
+  italic:
+    family: DejaVuSansMono Nerd Font
+  size: 13
+  offset:
+    x: 0
+    y: 1
+  draw_bold_text_with_bright_colors: true
+
+cursor:
+  style:
+    shape: Beam
+
+colors:
+  cursor:
+    text: '0xc0caf5'
+    cursor: '0xc0caf5'
+  #selection:
+  #  text: '0x1a1b26'
+  #  background: '0xc0caf5'
+  primary:
+    background: '0x1a1b26'
+    foreground: '0xc0caf5'
+  normal:
+    black: '0x15161E'
+    red: '0xf7768e'
+    green: '0x9ece6a'
+    yellow: '0xe0af68'
+    blue: '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan: '0x7dcfff'
+    white: '0xa9b1d6'
+  bright:
+    black: '0x414868'
+    red: '0xf7768e'
+    green: '0x9ece6a'
+    yellow: '0xe0af68'
+    blue: '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan: '0x7dcfff'
+    white: '0xc0caf5'
+env:
+    WINIT_X11_SCALE_FACTOR: "1"

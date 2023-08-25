@@ -5,15 +5,41 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
-ANTIDOTE_HOME=$HOME/.antidote
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
-antidote load
+# Language
+export LANG=en_US.utf8
+
+
+# Ranger default editor
+export VISUAL=nano
+export EDITOR=nano
+export EXPLORER=ranger
+# Sxhkd
+export SXHKD_SHELL=/bin/bash
+
+# Rust
+PATH=$PATH:$HOME/.cargo/bin
+source "$HOME/.cargo/env"
+
+
+#my scripts
+SCRIPTS_HOME=$HOME/scripts
+PATH=$SCRIPTS_HOME:$PATH
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+bindkey -e
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # Default aliases
+alias la='lsd -A'
+alias l='lsd -CF'
+
+alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 
@@ -48,6 +74,17 @@ alias gck="git checkout"
 alias gd="git diff"
 alias fgc="git add .;git commit -m 'fast committed';git push"
 
+# Latex aliases
+alias lclean="rm *.{aux,fdb*,fls*,log,sync*,out}"
+# Screencast to mobile
+alias mobile="scrcpy --tcpip=192.168.0.8:5555"
+
+# Docker aliases
+alias dps="docker ps"
+alias dcu="docker compose up --build"
+alias dcd="docker compose down"
+alias dcl="docker compose logs"
+
 # Cargo aliases
 
 alias cr="cargo run"
@@ -63,35 +100,40 @@ alias mixta="mix test"
 alias mixc="mix compile"
 alias mixd="mix deps.get"
 alias mixr="mix run"
-alias mixci="mix format && mix credo && mix dialyzer && mix compile && mix test"
+alias mixci="mix format && mix credo && mix dialyzer && mix compile && mix test --no-start"
+
+# Mix
+# REcord video
+alias svgtopdf="inkscape --export-type=pdf"
+
+#Calc function
+calc(){ awk "BEGIN { print "$*" }"; }
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+#xset r rate 200 40
+
+#Reports current power draw
+power(){
+	echo - | awk "{printf \"%.2f\", \
+	$(( \
+	  $(cat /sys/class/power_supply/BAT1/current_now) * \
+	  $(cat /sys/class/power_supply/BAT1/voltage_now) \
+	)) / 1000000000000 }" ; echo " W "
+}
 
 
-# Work script
-# [[ -r "$HOME_DIR/source-scripts/work.sh" ]] && source $HOME_DIR/source-scripts/work.sh
+fpath=($HOME/.gtheme/completions $fpath)
+autoload -Uz compinit && compinit
 
-# Setting the keybindings for history substring search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# Antidote plugin manager
+ANTIDOTE_HOME=$HOME/.antidote
+source $HOME/homebrew/opt/antidote/share/antidote/antidote.zsh
+antidote load
 
-# Setting the correct key bindings
-bindkey  "^[[H"    beginning-of-line
-bindkey  "^[[F"    end-of-line
-bindkey  "^[[3~"   delete-char
-bindkey  "^[[1;3C" forward-word
-bindkey  "^[[1;3D" backward-word
+export BREW_HOME=$HOME/homebrew
+export PATH=$BREW_HOME/bin:$PATH
+export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --caskroom=$BREW_HOME/Caskroom"
 
-# Colored man pages
-export LESS_TERMCAP_mb=$'\E[1;34m'     # begin bold
-export LESS_TERMCAP_md=$'\E[1;34m'     # begin blink
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;35m'    # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-
-# Completions + gtheme
-fpath=($HOME_DIR/.gtheme/completions $fpath)
-autoload -Uz compinit && compinit -u
-zstyle ':completion:*' menu select
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# In order gpg to work
+export GPG_TTY=$(tty)

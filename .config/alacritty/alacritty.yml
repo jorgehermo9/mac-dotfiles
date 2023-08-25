@@ -8,11 +8,11 @@ window:
 
 font:
   normal:
-    family: DejaVuSansMono Nerd Font
+    family: DejaVuSansM Nerd Font
   bold:
-    family: DejaVuSansMono Nerd Font
+    family: DejaVuSansM Nerd Font
   italic:
-    family: DejaVuSansMono Nerd Font
+    family: DejaVuSansM Nerd Font
   size: 13
   offset:
     x: 0
